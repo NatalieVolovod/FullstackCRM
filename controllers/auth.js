@@ -1,4 +1,6 @@
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const keys = require('../config/keys');
 const User = require('../models/User');
 
 module.exports.login = async function(req, res) {
@@ -9,10 +11,13 @@ module.exports.login = async function(req, res) {
         const passwordResult = bcrypt.compareSync(req.body.password, candidate.password);
         if(passwordResult) {
             // generate token
-            const token = '';
+            const token = jwt.sign({
+                email: candidate.email,
+                userId: candidate._id
+            }, keys.jwt, {expiresIn: 60 * 60}); // expires in an hour
 
             res.status(200).json({
-                token: token
+                token: `Bearer ${token}`
             });
         } else {
             // wrong password
