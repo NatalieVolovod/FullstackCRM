@@ -32,6 +32,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         MaterialService.toast('Now you can login using your data.');
       } else if(params['accessDenied']) {
         MaterialService.toast('In order to use the app please login.');
+      } else if(params['tokenExpired']) {
+        MaterialService.toast('Session expired. Please enter your credentials again.');
       }
     });
   }
