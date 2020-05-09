@@ -1,8 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {AuthService} from "../shared/services/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
+import {AuthService} from "../shared/services/auth.service";
+
 
 @Component({
   selector: 'app-register',
@@ -24,6 +25,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
     });
   }
 
+  ngOnDestroy(): void {
+    if(this.aSub) {
+      this.aSub.unsubscribe();
+    }
+  }
+
   onSubmit() {
     this.form.disable();
     this.aSub = this.authService.registration(this.form.value).subscribe(
@@ -39,11 +46,5 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.form.enable();
       }
     );
-  }
-
-  ngOnDestroy(): void {
-    if(this.aSub) {
-      this.aSub.unsubscribe();
-    }
   }
 }

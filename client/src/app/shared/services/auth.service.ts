@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
-import {User} from "../interfaces";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {tap} from "rxjs/operators";
+import {User} from "../interfaces";
 
 @Injectable({
   providedIn: "root"
@@ -14,7 +14,7 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   registration(user: User): Observable<User> {
-    return this.http.post<User>('/api/auth/registration', user)
+    return this.http.post<User>('/api/auth/registration', user);
   }
 
   login(user: User): Observable<{token: string}> {
